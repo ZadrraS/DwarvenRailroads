@@ -15,7 +15,7 @@ namespace dwarvenrr
         ~Cell();
 
         size_t base_type(); 
-        const HexCoord<int> &position();
+        const HexCoord<int> &position() const;
 
     private:
         size_t base_type_;

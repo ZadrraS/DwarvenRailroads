@@ -35,20 +35,20 @@ namespace dwarvenrr
         return HexCoord<T>((T)rx, (T)ry, (T)rz);
     }
     template<typename T>
-    HexCoord<T> GetHexCoords(const Vector2<T> &pixel_coord, T hexSize)
+    HexCoord<T> GetHexCoords(const Vector2<T> &pixel_coord, T hex_size)
     {
-        double q = 2.0 / 3.0 * pixel_coord.x / hexSize;
-        double r = (-1.0 / 3.0 * pixel_coord.x + 1.0 / 3.0 * sqrt(3.0) * pixel_coord.y) / hexSize;
+        double q = 2.0 / 3.0 * pixel_coord.x / hex_size;
+        double r = (-1.0 / 3.0 * pixel_coord.x + 1.0 / 3.0 * sqrt(3.0) * pixel_coord.y) / hex_size;
 
         HexCoord<T> roundedCoord = HexRound<T>(HexCoord<double>(q, r));
         return roundedCoord;
     }
 
     template<typename T>
-    Vector2<int> GetPixelCoords(const HexCoord<T> &coord, T hexSize)
+    Vector2<int> GetPixelCoords(const HexCoord<T> &coord, T hex_size)
     {
-        int x = (int)(hexSize * 3.0 / 2.0 * coord.q());
-        int y = (int)(hexSize * sqrt(3.0) * (coord.r() + coord.q() / 2.0));
+        int x = (int)(hex_size * 3.0 / 2.0 * coord.q());
+        int y = (int)(hex_size * sqrt(3.0) * (coord.r() + coord.q() / 2.0));
 
         return Vector2<int>(x, y);
     }

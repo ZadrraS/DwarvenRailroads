@@ -13,7 +13,9 @@ add_executable(dwarvenrr
   main.cpp
 
   map/cell.cpp
-  map/map.cpp
+  map/grid.cpp
+
+  rendering/map_renderer.cpp
 )
 
 install(TARGETS dwarvenrr DESTINATION bin)

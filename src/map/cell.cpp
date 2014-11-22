@@ -22,7 +22,7 @@ namespace dwarvenrr
         return base_type_;
     }
     
-    const HexCoord<int> &Cell::position()
+    const HexCoord<int> &Cell::position() const
     {
         return position_;
     }
