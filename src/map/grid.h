@@ -1,9 +1,10 @@
 #ifndef DWARVENRR_MAP_GRID_H_
 #define DWARVENRR_MAP_GRID_H_
 
-#include <vector>
-
 #include "map/cell.h"
+
+#include <vector>
+#include <sstream>
 
 namespace dwarvenrr 
 {
@@ -24,6 +25,9 @@ namespace dwarvenrr
         Cell &get_cell(const HexCoord<int> &coord);
         CellContainer &cells();
         const CellContainer &cells_const() const;
+
+        void Save(std::stringstream &buffer) const;
+        void Load(std::stringstream &buffer);
 
     private:
         CellContainer cells_; 

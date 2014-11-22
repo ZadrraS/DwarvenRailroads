@@ -7,18 +7,20 @@
 
 namespace dwarvenrr 
 {
+    typedef size_t CellType;
+
     class Cell
     {
     public:
         Cell();
-        Cell(const HexCoord<int>& position, size_t base_type = 0);
+        Cell(const HexCoord<int>& position, CellType base_type = 0);
         ~Cell();
 
-        size_t base_type(); 
+        CellType base_type() const;
         const HexCoord<int> &position() const;
 
     private:
-        size_t base_type_;
+        CellType base_type_;
 
         HexCoord<int> position_;
 

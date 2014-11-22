@@ -8,11 +8,12 @@
 namespace dwarvenrr 
 {
     class Grid;
-
+    class TextureManager;
+    
     class MapRenderer
     {
     public:
-        MapRenderer(const Grid &grid);
+        MapRenderer(TextureManager &texture_manager, const Grid &grid);
         ~MapRenderer();
 
         void Draw(sf::RenderWindow &window);
@@ -24,7 +25,7 @@ namespace dwarvenrr
 
         std::vector<sf::Sprite> sprites_;
         std::vector<sf::Text> texts_;
-        sf::Texture texture_;
+        TextureManager &texture_manager_;
         sf::Font font_;
 
         sf::Vector2i origin_;

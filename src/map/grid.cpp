@@ -4,16 +4,7 @@ namespace dwarvenrr
 {
     Grid::Grid()
     {
-        cells_.resize(49);
-        arrangement_type_ = RECTANGLE;
-        for (int x = 0; x <= 6; ++x)
-        {
-            for (int y = 0; y <= 6; ++y)
-            {
-                //Nothing yet
-                cells_[y * 7 + x] = Cell(HexCoord<int>(x - 3, y - 3, true));
-            }
-        }
+       
     }
 
     Grid::~Grid() 
@@ -37,6 +28,44 @@ namespace dwarvenrr
     const CellContainer &Grid::cells_const() const
     {
         return cells_;
+    }
+
+    void Grid::Save(std::stringstream &buffer) const
+    {
+        buffer << arrangement_type_ << "\n";
+        if (arrangement_type_ == RECTANGLE)
+        {
+
+        }
+    }
+
+    void Grid::Load(std::stringstream &buffer)
+    {
+        size_t arr_type;
+        buffer >> arr_type;
+        arrangement_type_ = (GridArrangementType)arr_type;
+        if (arrangement_type_ == RECTANGLE)
+        {
+            size_t width, height;
+            buffer >> width >> height;
+            size_t x_center = width / 2;
+            size_t y_center = height / 2;
+            cells_.resize(width * height);
+            for (size_t x = 0; x < width; ++x)
+            {
+                for (size_t y = 0; y < height; ++y)
+                {
+                    size_t type;
+                    buffer >> type;
+                    cells_[y * width + x] = Cell(HexCoord<int>((int)x - x_center, (int)y - y_center, true), type);
+                }
+            }
+        }
+        else if (arrangement_type_ == HEXAGON)
+        {
+            size_t radius;
+            buffer >> radius;
+        }
     }
 
 }  // namespace dwarvenrr

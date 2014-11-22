@@ -16,6 +16,8 @@ add_executable(dwarvenrr
   map/grid.cpp
 
   rendering/map_renderer.cpp
+
+  resources/texture_manager.cpp
 )
 
 install(TARGETS dwarvenrr DESTINATION bin)

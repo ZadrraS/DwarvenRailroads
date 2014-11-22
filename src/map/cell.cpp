@@ -7,7 +7,7 @@ namespace dwarvenrr
 
     }
     
-    Cell::Cell(const HexCoord<int>& position, size_t base_type) : base_type_(base_type), position_(position)
+    Cell::Cell(const HexCoord<int>& position, CellType base_type) : base_type_(base_type), position_(position)
     {
 
     }
@@ -17,7 +17,7 @@ namespace dwarvenrr
 
     }
 
-    size_t Cell::base_type() 
+    CellType Cell::base_type() const
     {
         return base_type_;
     }
