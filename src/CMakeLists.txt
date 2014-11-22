@@ -12,7 +12,8 @@ link_libraries(
 add_executable(dwarvenrr
   main.cpp
 
-  helpers/sfml_conversion.cpp
+  map/cell.cpp
+  map/map.cpp
 )
 
 install(TARGETS dwarvenrr DESTINATION bin)
