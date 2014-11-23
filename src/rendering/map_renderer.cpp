@@ -9,7 +9,7 @@
 
 namespace dwarvenrr
 {
-    MapRenderer::MapRenderer(TextureManager &texture_manager, const Grid &grid) : texture_manager_(texture_manager), grid_(grid)
+    MapRenderer::MapRenderer(TextureManager &texture_manager, const Grid &grid) : grid_(grid), texture_manager_(texture_manager)
     {
         if (!font_.loadFromFile("data/sansation.ttf"))
         {
@@ -66,9 +66,24 @@ namespace dwarvenrr
         for (CellContainer::const_iterator cell_it = grid_.cells_const().begin(); cell_it != grid_.cells_const().end(); ++cell_it)
         {
             if (cell_it->position() == highlighted_hex_coord_)
+            {
                 sprites_[i].setColor(sf::Color(0, 255, 0));
+            }
             else
-                sprites_[i].setColor(sf::Color(255, 255, 255));
+            {
+                bool in_path = false;
+                for (auto hex: path_)
+                {
+                    if (hex == cell_it->position())
+                    {
+                        in_path = true;
+                        sprites_[i].setColor(sf::Color(0, 0, 255));
+                        break;
+                    }
+                }
+                if (!in_path)
+                    sprites_[i].setColor(sf::Color(255, 255, 255));
+            }
             
             window.draw(sprites_[i]);
             window.draw(texts_[i]);
@@ -80,4 +95,15 @@ namespace dwarvenrr
     {
         highlighted_hex_coord_ = GetHexCoords(Vector2<int>(coord.x, coord.y), hex_size_);
     }
+
+    void MapRenderer::DrawPath(const std::vector< HexCoord<int> > &path)
+    {
+        path_ = path;
+    }
+
+    HexCoord<int> MapRenderer::GetHexFromScreen(const sf::Vector2f &coord)
+    {
+        return GetHexCoords(Vector2<int>(coord.x, coord.y), hex_size_);
+    }
+
 }  // namespace dwarvenrr

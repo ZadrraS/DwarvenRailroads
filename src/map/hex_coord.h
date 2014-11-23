@@ -3,8 +3,20 @@
 
 #include "helpers/vector_2.h"
 
+#include <vector>
+
 namespace dwarvenrr 
 {
+    enum HexDirection
+    {
+        NORTH,
+        NORTH_EAST,
+        SOUTH_EAST,
+        SOUTH,
+        SOUTH_WEST,
+        NORTH_WEST        
+    };
+
     template <typename T>
     class HexCoord
     {
@@ -61,6 +73,26 @@ namespace dwarvenrr
         {
             T z = odd_q_coord.y - (odd_q_coord.x - (odd_q_coord.x & 1)) / 2.0;
             set_cube(odd_q_coord.x, -odd_q_coord.x - z, z);
+        }
+
+        HexCoord<T> GetNeighbour(HexDirection direction) const
+        {
+            static const int neighbor_offsets_q[6] = {0, +1, +1, 0, -1, -1};
+            static const int neighbor_offsets_r[6] = {-1, -1, 0, +1, +1, 0};
+            return HexCoord<T>(q_ + neighbor_offsets_q[direction], r_ + neighbor_offsets_r[direction]);
+        }
+
+        std::vector< HexCoord<T> > GetNeighbours()
+        {
+            std::vector< HexCoord<T> > neighbours;
+            neighbours.push_back(GetNeighbour(NORTH));
+            neighbours.push_back(GetNeighbour(NORTH_EAST));
+            neighbours.push_back(GetNeighbour(SOUTH_EAST));
+            neighbours.push_back(GetNeighbour(SOUTH));
+            neighbours.push_back(GetNeighbour(SOUTH_WEST));
+            neighbours.push_back(GetNeighbour(NORTH_WEST));
+
+            return neighbours;
         }
 
     private:

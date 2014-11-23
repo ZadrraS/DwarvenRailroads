@@ -53,8 +53,6 @@ namespace dwarvenrr
         return Vector2<int>(x, y);
     }
 
-    
-
 }  // namespace dwarvenrr
 
 #endif  // DWARVENRR_HELPERS_HEX_UTILS_H_

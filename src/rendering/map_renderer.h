@@ -19,6 +19,8 @@ namespace dwarvenrr
         void Draw(sf::RenderWindow &window);
 
         void HighlightCell(const sf::Vector2f &coord);
+        void DrawPath(const std::vector< HexCoord<int> > &path);
+        HexCoord<int> GetHexFromScreen(const sf::Vector2f &coord);
 
     private:
         const Grid &grid_;
@@ -32,6 +34,7 @@ namespace dwarvenrr
 
         int hex_size_;
         HexCoord<int> highlighted_hex_coord_;
+        std::vector< HexCoord<int> > path_;
     };
 
 }  // namespace dwarvenrr
