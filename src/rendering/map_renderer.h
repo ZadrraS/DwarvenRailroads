@@ -35,6 +35,7 @@ namespace dwarvenrr
         int hex_size_;
         HexCoord<int> highlighted_hex_coord_;
         std::vector< HexCoord<int> > path_;
+        sf::Vector2f pixel_coord;
     };
 
 }  // namespace dwarvenrr
