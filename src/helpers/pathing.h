@@ -1,14 +1,8 @@
-/* ******************
-Most of the code here has been shamelessly stolen from Amit because I'm lazy.
-http://www.redblobgames.com/pathfinding/a-star/implementation.html
-******************* */
-
 #ifndef DWARVENRR_HELPERS_PATHING_H_
 #define DWARVENRR_HELPERS_PATHING_H_
 
-#include "map/hex_coord.h"
 #include "map/grid.h"
-#include "helpers/hex_utils.h"
+#include "helpers/geometry.h"
 
 #include <cmath>
 #include <queue>
@@ -18,12 +12,12 @@ http://www.redblobgames.com/pathfinding/a-star/implementation.html
 
 namespace std 
 {
-    template <> struct hash< dwarvenrr::HexCoord<int> >
+    template <> struct hash< dwarvenrr::Vector2<int> >
     {
-        size_t operator()(const dwarvenrr::HexCoord<int> &x) const
+        size_t operator()(const dwarvenrr::Vector2<int> &x) const
         {
             // 420 hash it. Should be good enough for now.
-            return 104729 * std::hash<int>()(x.q()) ^ std::hash<int>()(x.r());
+            return 104729 * std::hash<int>()(x.x ^ std::hash<int>()(x.y));
         }
     };
 }
@@ -64,28 +58,28 @@ namespace dwarvenrr
         }
     };
 
-    std::vector< HexCoord<int> > FindShortestPath(const Grid &grid, const HexCoord<int> &start_hex, const HexCoord<int> &goal_hex)
+    std::vector< Vector2<int> > FindShortestPath(const Grid &grid, const Vector2<int> &start_pos, const Vector2<int> &goal_pos)
     {
-        if (start_hex == goal_hex)
+        if (start_pos == goal_pos)
         {
-            std::vector< HexCoord<int> > path;
-            path.push_back(start_hex);
+            std::vector< Vector2<int> > path;
+            path.push_back(start_pos);
             return path;
         }
 
-        std::unordered_map< HexCoord<int>, HexCoord<int> > came_from;
-        std::unordered_map< HexCoord<int>, double > cost_so_far;
-        PriorityQueue< HexCoord<int>, double > frontier;
+        std::unordered_map< Vector2<int>, Vector2<int> > came_from;
+        std::unordered_map< Vector2<int>, double > cost_so_far;
+        PriorityQueue< Vector2<int>, double > frontier;
 
-        frontier.put(start_hex, 0.0);
-        came_from[start_hex] = start_hex;
-        cost_so_far[start_hex] = 0.0;
+        frontier.put(start_pos, 0.0);
+        came_from[start_pos] = start_pos;
+        cost_so_far[start_pos] = 0.0;
         
-        HexCoord<int> current;
+        Vector2<int> current;
         while (!frontier.empty())
         {
             current = frontier.get();
-            if (current == goal_hex)
+            if (current == goal_pos)
                 break;
 
             for (auto next: grid.GetNeighbours(current))
@@ -94,19 +88,19 @@ namespace dwarvenrr
                 if (cost_so_far.find(next) == cost_so_far.end() || new_cost < cost_so_far[next])
                 {
                     cost_so_far[next] = new_cost;
-                    double priority = new_cost + HexDistance<int>(next, goal_hex);
+                    double priority = new_cost + EuclideanDistance(next, goal_pos);
                     frontier.put(next, priority);
                     came_from[next] = current;
                 }
             }
         }
 
-        std::vector< HexCoord<int> > path;
+        std::vector< Vector2<int> > path;
         if (!frontier.empty())
         {            
-            current = goal_hex;
+            current = goal_pos;
             path.push_back(current);
-            while (current != start_hex)
+            while (current != start_pos)
             {
                 current = came_from[current];
                 path.push_back(current);

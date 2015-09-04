@@ -1,7 +1,7 @@
 #ifndef DWARVENRR_MAP_CELL_H_
 #define DWARVENRR_MAP_CELL_H_
 
-#include "map/hex_coord.h"
+#include "helpers/vector_2.h"
 
 #include <cstdlib>
 
@@ -13,16 +13,16 @@ namespace dwarvenrr
     {
     public:
         Cell();
-        Cell(const HexCoord<int>& position, CellType base_type = 0);
+        Cell(const Vector2<int>& position, CellType base_type = 0);
         ~Cell();
 
         CellType base_type() const;
-        const HexCoord<int> &position() const;
+        const Vector2<int> &position() const;
 
     private:
         CellType base_type_;
 
-        HexCoord<int> position_;
+        Vector2<int> position_;
 
     };
 }  // namespace dwarvenrr

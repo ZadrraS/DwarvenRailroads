@@ -1,6 +1,5 @@
 #include "map/grid.h"
-
-#include "helpers/hex_utils.h"
+#include "helpers/geometry.h"
 #include <iostream>
 namespace dwarvenrr 
 {
@@ -25,46 +24,36 @@ namespace dwarvenrr
     }
 
 
-    std::vector< HexCoord<int> > Grid::GetNeighbours(const HexCoord<int> &coord) const
+    std::vector< Vector2<int> > Grid::GetNeighbours(const Vector2<int> &coord) const
     {
-        std::vector< HexCoord<int> > neighbours;
-        for (HexDirection dir = NORTH; dir <= NORTH_WEST; dir = HexDirection(dir + 1))
+        std::vector< Vector2<int> > neighbours;
+        /*for (CellDirection dir = NORTH; dir <= NORTH_WEST; dir = CellDirection(dir + 1))
         {
-            HexCoord<int> neighbour = coord.GetNeighbour(dir);
+            Vector2<int> neighbour = coord.GetNeighbour(dir);
             if (IsPosValid(neighbour))
             {
                 if (GetCell(neighbour).base_type() != 0)
                     neighbours.push_back(neighbour);
             }
-        }
+        }*/
 
         return neighbours;
     }
 
-    bool Grid::IsPosValid(const HexCoord<int> &coord) const
+    bool Grid::IsPosValid(const Vector2<int> &coord) const
     {
-        int x_center = width_ / 2;
-        int y_center = height_ / 2;
-        Vector2<int> offset = coord.odd_q_offset();
-        int x = offset.x + x_center;
-        int y = offset.y + y_center;
-        return x >= 0 && y >= 0 && (size_t)x < width_ && (size_t)y < height_;
+        return coord.x >= 0 && coord.y >= 0 && (size_t)coord.x < width_ && (size_t)coord.y < height_;
     }
 
-    double Grid::Distance(const HexCoord<int> &coord1, const HexCoord<int> &coord2) const
+    double Grid::Distance(const Vector2<int> &coord1, const Vector2<int> &coord2) const
     {
         // Temporary
-        return HexDistance(coord1, coord2);
+        return EuclideanDistance(coord1, coord2);
     }
 
-    const Cell &Grid::GetCell(const HexCoord<int> &coord) const
+    const Cell &Grid::GetCell(const Vector2<int> &coord) const
     {
-        int x_center = width_ / 2;
-        int y_center = height_ / 2;
-        Vector2<int> offset = coord.odd_q_offset();
-        int x = offset.x + x_center;
-        int y = offset.y + y_center;
-        return cells_[y * width_ + x];
+        return cells_[coord.y * width_ + coord.x];
     }
 
     void Grid::Save(std::stringstream &buffer) const
@@ -97,7 +86,7 @@ namespace dwarvenrr
                 {
                     size_t type;
                     buffer >> type;
-                    cells_[y * width + x] = Cell(HexCoord<int>((int)x - x_center, (int)y - y_center, true), type);
+                    cells_[y * width + x] = Cell(Vector2<int>((int)x - x_center, (int)y - y_center), type);
                 }
             }
         }

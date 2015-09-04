@@ -1,8 +1,6 @@
 #include "map/array2d.h"
 #include "helpers/vector_2.h"
-#include "helpers/hex_utils.h"
 #include "helpers/pathing.h"
-#include "map/hex_coord.h"
 #include "map/grid.h"
 #include "rendering/map_renderer.h"
 #include "resources/texture_manager.h"
@@ -55,8 +53,8 @@ int main()
     sf::View view(sf::FloatRect(-512.0, -512.0, 1024.0, 1024.0));
     double zoom = 1.0;
 
-    dwarvenrr::HexCoord<int> start_path_hex;
-    dwarvenrr::HexCoord<int> end_path_hex;
+    dwarvenrr::Vector2<int> start_path_cell;
+    dwarvenrr::Vector2<int> end_path_cell;
     bool start_set = false;
     bool end_set = false;
     while (window.isOpen()) 
@@ -113,26 +111,26 @@ int main()
         sf::Vector2f world_position = window.mapPixelToCoords(local_position);
         local_position.x = local_position.x + view.getCenter().x - view.getSize().x;
         local_position.y = local_position.y + view.getCenter().y - view.getSize().y;
-        dwarvenrr::HexCoord<int> hex_position = map_renderer.GetHexFromScreen(world_position);
+        dwarvenrr::Vector2<int> cell_position = dwarvenrr::Vector2<int>(world_position.x, world_position.y);
 
         map_renderer.HighlightCell(world_position);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
         {
-            start_path_hex = hex_position;
+            start_path_cell = cell_position;
             start_set = true;
         }
 
-        end_path_hex = hex_position; 
+        end_path_cell = cell_position; 
         end_set = true;
         /*else if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
         {
-            end_path_hex = hex_position; 
+            end_path_cell = cell_position; 
             end_set = true;
         }*/
         if (start_set && end_set)
         {
-            std::vector< dwarvenrr::HexCoord<int> > path = dwarvenrr::FindShortestPath(grid, start_path_hex, end_path_hex);
+            std::vector< dwarvenrr::Vector2<int> > path = dwarvenrr::FindShortestPath(grid, start_path_cell, end_path_cell);
             map_renderer.DrawPath(path);
         }
         

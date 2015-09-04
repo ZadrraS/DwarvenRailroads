@@ -24,6 +24,16 @@ class Vector2
 
   }
 
+  bool operator==(const Vector2<T> &vec) const
+  {
+    return x == vec.x && y == vec.y;
+  }
+
+  bool operator!=(const Vector2<T> &vec) const
+  {
+    return !(*this == vec);
+  }
+
   T DotProduct(const Vector2<T> &vector2)
   {
     return x * vector2.x + y * vector2.y;

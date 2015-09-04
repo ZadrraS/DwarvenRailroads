@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "map/hex_coord.h"
+#include "helpers/vector_2.h"
 
 namespace dwarvenrr 
 {
@@ -19,8 +19,7 @@ namespace dwarvenrr
         void Draw(sf::RenderWindow &window);
 
         void HighlightCell(const sf::Vector2f &coord);
-        void DrawPath(const std::vector< HexCoord<int> > &path);
-        HexCoord<int> GetHexFromScreen(const sf::Vector2f &coord);
+        void DrawPath(const std::vector< Vector2<int> > &path);
 
     private:
         const Grid &grid_;
@@ -32,10 +31,9 @@ namespace dwarvenrr
 
         sf::Vector2i origin_;
 
-        int hex_size_;
-        HexCoord<int> highlighted_hex_coord_;
-        std::vector< HexCoord<int> > path_;
-        sf::Vector2f pixel_coord;
+        int cell_size_;
+        Vector2<int> highlighted_cell_coord_;
+        std::vector< Vector2<int> > path_;
     };
 
 }  // namespace dwarvenrr

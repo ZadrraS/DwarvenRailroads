@@ -25,10 +25,10 @@ namespace dwarvenrr
         CellContainer &cells();
         const CellContainer &cells_const() const;
 
-        std::vector< HexCoord<int> > GetNeighbours(const HexCoord<int> &coord) const;
-        bool IsPosValid(const HexCoord<int> &coord) const;
-        double Distance(const HexCoord<int> &coord1, const HexCoord<int> &coord2) const;
-        const Cell &GetCell(const HexCoord<int> &coord) const;
+        std::vector< Vector2<int> > GetNeighbours(const Vector2<int> &coord) const;
+        bool IsPosValid(const Vector2<int> &coord) const;
+        double Distance(const Vector2<int> &coord1, const Vector2<int> &coord2) const;
+        const Cell &GetCell(const Vector2<int> &coord) const;
 
         void Save(std::stringstream &buffer) const;
         void Load(std::stringstream &buffer);
