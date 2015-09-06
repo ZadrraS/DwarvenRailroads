@@ -8,12 +8,6 @@
 
 namespace dwarvenrr 
 {
-    enum GridArrangementType
-    {
-        RECTANGLE,
-        HEXAGON
-    };
-
     typedef std::vector<Cell> CellContainer;
 
     class Grid
@@ -37,8 +31,6 @@ namespace dwarvenrr
         CellContainer cells_;
         size_t width_;
         size_t height_;
-
-        GridArrangementType arrangement_type_;
 
     };
 }  // namespace dwarvenrr

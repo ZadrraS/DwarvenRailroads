@@ -50,7 +50,7 @@ int main()
     
     dwarvenrr::MapRenderer map_renderer(texture_manager, grid);
 
-    sf::View view(sf::FloatRect(-512.0, -512.0, 1024.0, 1024.0));
+    sf::View view(sf::FloatRect(0.0, 0.0, 1024.0, 1024.0));
     double zoom = 1.0;
 
     dwarvenrr::Vector2<int> start_path_cell;
@@ -111,9 +111,9 @@ int main()
         sf::Vector2f world_position = window.mapPixelToCoords(local_position);
         local_position.x = local_position.x + view.getCenter().x - view.getSize().x;
         local_position.y = local_position.y + view.getCenter().y - view.getSize().y;
-        dwarvenrr::Vector2<int> cell_position = dwarvenrr::Vector2<int>(world_position.x, world_position.y);
-
-        map_renderer.HighlightCell(world_position);
+        dwarvenrr::Vector2<int> cell_position = 
+            map_renderer.GetCellCoordFromScreen(dwarvenrr::Vector2<int>(world_position.x, world_position.y));
+        map_renderer.HighlightCell(cell_position);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
         {

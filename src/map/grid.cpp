@@ -27,6 +27,20 @@ namespace dwarvenrr
     std::vector< Vector2<int> > Grid::GetNeighbours(const Vector2<int> &coord) const
     {
         std::vector< Vector2<int> > neighbours;
+        std::vector< Vector2<int> > possible_neighbours;
+        possible_neighbours.push_back(Vector2<int>(coord.x - 1, coord.y));
+        possible_neighbours.push_back(Vector2<int>(coord.x, coord.y - 1));
+        possible_neighbours.push_back(Vector2<int>(coord.x + 1, coord.y));
+        possible_neighbours.push_back(Vector2<int>(coord.x, coord.y + 1));
+
+        for (const Vector2<int> &neighbour: possible_neighbours)
+        {
+            if (IsPosValid(neighbour))
+            {
+                if (GetCell(neighbour).base_type() != 0)
+                    neighbours.push_back(neighbour);
+            }  
+        }
         /*for (CellDirection dir = NORTH; dir <= NORTH_WEST; dir = CellDirection(dir + 1))
         {
             Vector2<int> neighbour = coord.GetNeighbour(dir);
@@ -58,42 +72,25 @@ namespace dwarvenrr
 
     void Grid::Save(std::stringstream &buffer) const
     {
-        buffer << arrangement_type_ << "\n";
-        if (arrangement_type_ == RECTANGLE)
-        {
 
-        }
     }
 
     void Grid::Load(std::stringstream &buffer)
     {
-        size_t arr_type;
-        buffer >> arr_type;
-        arrangement_type_ = (GridArrangementType)arr_type;
-        if (arrangement_type_ == RECTANGLE)
-        {
-            size_t width, height;
-            buffer >> width >> height;
-            width_ = width;
-            height_ = height;
-            size_t x_center = width / 2;
-            size_t y_center = height / 2;
-            cells_.resize(width * height);
+        size_t width, height;
+        buffer >> width >> height;
+        width_ = width;
+        height_ = height;
+        cells_.resize(width * height);
 
-            for (size_t y = 0; y < height; ++y)
-            {
-                for (size_t x = 0; x < width; ++x)
-                {
-                    size_t type;
-                    buffer >> type;
-                    cells_[y * width + x] = Cell(Vector2<int>((int)x - x_center, (int)y - y_center), type);
-                }
-            }
-        }
-        else if (arrangement_type_ == HEXAGON)
+        for (size_t y = 0; y < height; ++y)
         {
-            size_t radius;
-            buffer >> radius;
+            for (size_t x = 0; x < width; ++x)
+            {
+                size_t type;
+                buffer >> type;
+                cells_[y * width + x] = Cell(Vector2<int>(x, y), type);
+            }
         }
     }
 

@@ -16,7 +16,7 @@ namespace dwarvenrr
             std::cout << "Font ERROR" << std::endl;
         }
 
-        cell_size_ = int(1.7455 * 32);
+        cell_size_ = 64;
 
         origin_.x = 0;
         origin_.y = 0;
@@ -24,9 +24,8 @@ namespace dwarvenrr
         {
             sf::Sprite sprite;
             sprite.setTexture(texture_manager_.GetTexture(cell_it->base_type()));
-            sprite.setScale(1.7455, 1.7455);
-            sprite.setOrigin(texture_manager_.GetTexture(cell_it->base_type()).getSize().x  / 2, texture_manager_.GetTexture(cell_it->base_type()).getSize().y  / 2);
-            //std::cout << "width: " << texture_manager_.GetTexture(cell_it->base_type()).getSize().x << std::endl;
+            sprite.setScale(1.0, 1.0);
+            sprite.setOrigin(0, 0);
             dwarvenrr::Vector2<int> cell_pos = dwarvenrr::Vector2<int>(cell_it->position().x * cell_size_, 
                                                                         cell_it->position().y * cell_size_);
 
@@ -39,9 +38,9 @@ namespace dwarvenrr
             text.setFont(font_); // font is a sf::Font
 
             // set the string to display
-            std::stringstream ss;
-            ss << "TROLO";
-            text.setString(ss.str());
+            //std::stringstream ss;
+            //ss << "TROLO";
+            //text.setString(ss.str());
 
             // set the character size
             text.setCharacterSize(16); // in pixels, not points!
@@ -66,7 +65,7 @@ namespace dwarvenrr
         {
             if (cell_it->position() == highlighted_cell_coord_)
             {
-                sprites_[i].setColor(sf::Color(0, 255, 0));
+                sprites_[i].setColor(sf::Color(192, 192, 192));
             }
             else
             {
@@ -76,7 +75,7 @@ namespace dwarvenrr
                     if (cell == cell_it->position())
                     {
                         in_path = true;
-                        sprites_[i].setColor(sf::Color(0, 0, 255));
+                        sprites_[i].setColor(sf::Color(128, 128, 128));
                         break;
                     }
                 }
@@ -92,14 +91,19 @@ namespace dwarvenrr
         
     }
 
-    void MapRenderer::HighlightCell(const sf::Vector2f &coord)
+    void MapRenderer::HighlightCell(const Vector2<int> &coord)
     {
-        highlighted_cell_coord_ = Vector2<int>(coord.x * cell_size_, coord.y * cell_size_);
+        highlighted_cell_coord_ = coord;
     }
 
     void MapRenderer::DrawPath(const std::vector< Vector2<int> > &path)
     {
         path_ = path;
+    }
+
+    Vector2<int> MapRenderer::GetCellCoordFromScreen(const Vector2<int> &coord)
+    {
+        return Vector2<int>((int)(coord.x / cell_size_), (int)(coord.y / cell_size_));
     }
 
 }  // namespace dwarvenrr

@@ -18,8 +18,10 @@ namespace dwarvenrr
 
         void Draw(sf::RenderWindow &window);
 
-        void HighlightCell(const sf::Vector2f &coord);
+        void HighlightCell(const Vector2<int> &coord);
         void DrawPath(const std::vector< Vector2<int> > &path);
+
+        Vector2<int> GetCellCoordFromScreen(const Vector2<int> &coord);
 
     private:
         const Grid &grid_;

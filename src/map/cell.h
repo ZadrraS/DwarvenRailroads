@@ -7,6 +7,17 @@
 
 namespace dwarvenrr 
 {
+
+    enum EdgeDirection
+    {
+        FORWARD_LEFT,
+        FORWARD,
+        FORWARD_RIGHT,
+        BACKWARD_RIGHT,
+        BACKWARD,
+        BACKWARD_LEFT
+    };
+
     typedef size_t CellType;
 
     class Cell
@@ -25,6 +36,7 @@ namespace dwarvenrr
         Vector2<int> position_;
 
     };
+
 }  // namespace dwarvenrr
 
 #endif  // DWARVENRR_MAP_CELL_H_
