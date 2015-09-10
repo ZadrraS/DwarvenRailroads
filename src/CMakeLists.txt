@@ -11,6 +11,7 @@ link_libraries(
 
 add_executable(dwarvenrr
   main.cpp
+  game.cpp
 
   map/cell.cpp
   map/grid.cpp
