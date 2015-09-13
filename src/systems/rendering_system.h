@@ -15,8 +15,8 @@ struct RenderingComponent
 };
 
 class RenderingSystem : 
-    public BaseComponentManager<RenderingComponent>, 
-    public BaseSystem
+    public BaseSystem,
+    public BaseComponentManager<RenderingComponent>
 {
 public:
     RenderingSystem();

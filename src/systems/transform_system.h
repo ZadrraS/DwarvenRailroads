@@ -15,8 +15,8 @@ struct TransformComponent
 };
 
 class TransformSystem :  
-    public BaseComponentManager<TransformComponent>, 
-    public BaseSystem
+    public BaseSystem,
+    public BaseComponentManager<TransformComponent>
 {
 public:
     TransformSystem();
