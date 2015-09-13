@@ -11,7 +11,7 @@ link_libraries(
 
 add_executable(dwarvenrr
   main.cpp
-  game.cpp
+  engine.cpp
 
   map/cell.cpp
   map/grid.cpp
@@ -19,6 +19,10 @@ add_executable(dwarvenrr
   rendering/map_renderer.cpp
 
   resources/texture_manager.cpp
+
+  systems/system_manager.cpp
+  systems/rendering_system.cpp
+  systems/transform_system.cpp
 )
 
 install(TARGETS dwarvenrr DESTINATION bin)

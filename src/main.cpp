@@ -1,12 +1,12 @@
-#include "game.h"
+#include "engine.h"
 
 #include <iostream>
 
 int main()
 {
-    Game game;
+    dwarvenrr::Engine engine;
     std::cout << "Starting game..." << std::endl;
-    game.Start();
+    engine.Start();
 
     return 0;
 }

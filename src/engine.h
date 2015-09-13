@@ -1,14 +1,17 @@
-#ifndef DWARVERNRR_GAME_
-#define DWARVENRR_GAME_
+#ifndef DWARVERNRR_ENGINE_H_
+#define DWARVERNRR_ENGINE_H_
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-class Game
+namespace dwarvenrr
+{
+
+class Engine
 {
 public:
-    Game();
-    ~Game();
+    Engine();
+    ~Engine();
 
     void Start();
 
@@ -28,4 +31,6 @@ private:
     sf::RenderWindow render_window_;
 };
 
-#endif  // DWARVENRR_GAME_
+}  // namespace dwarvenrr
+
+#endif  // DWARVERNRR_ENGINE_H_

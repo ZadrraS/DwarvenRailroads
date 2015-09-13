@@ -1,4 +1,4 @@
-#include "game.h"
+#include "engine.h"
 
 #include "map/array2d.h"
 #include "helpers/vector_2.h"
@@ -11,17 +11,20 @@
 #include <sstream>
 #include <fstream>
 
-Game::Game()
+namespace dwarvenrr
+{
+
+Engine::Engine()
 {
 
 }
 
-Game::~Game()
+Engine::~Engine()
 {
 
 }
 
-void Game::Start()
+void Engine::Start()
 {
     state_ = RUNNING;
 
@@ -169,12 +172,14 @@ void Game::Start()
     }
 }
 
-bool Game::IsDone()
+bool Engine::IsDone()
 {
     return state_ == EXITING;
 }
 
-void Game::MainLoop()
+void Engine::MainLoop()
 {
     
 }
+
+}  // namespace dwarvenrr
