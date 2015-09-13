@@ -5,6 +5,8 @@
 
 #include "systems/base_system.h"
 #include "systems/base_component_manager.h"
+#include "systems/entity_state_observer.h"
+#include "systems/transform_system.h"
 
 namespace dwarvenrr 
 {
@@ -16,13 +18,15 @@ struct RenderingComponent
 
 class RenderingSystem : 
     public BaseSystem,
-    public BaseComponentManager<RenderingComponent>
+    public BaseComponentManager<RenderingComponent>,
+    public EntityStateObserver<TransformComponent>
 {
 public:
     RenderingSystem();
     ~RenderingSystem();
 
     void Update(double time_delta);
+    void OnNotify(entity_id_t entity_id, TransformComponent &component);
 
 private:
 };

@@ -6,7 +6,7 @@
 #include <unordered_map>
 
 #include "systems/entity.h"
-#include "systems/system_observer.h"
+#include "systems/entity_state_observer.h"
 
 namespace dwarvenrr 
 {
@@ -40,7 +40,7 @@ public:
         id_pos_map_t::iterator it = id_pos_map_.find(entity_id);
         if (it != id_pos_map_.end())
         {
-            std::swap(components_[*it], components_.back());
+            std::swap(components_[it->second], components_.back());
             components_.pop_back();
 
             id_pos_map_.erase(it);
@@ -52,7 +52,7 @@ public:
         id_pos_map_t::iterator it = id_pos_map_.find(entity_id);
         if (it != id_pos_map_.end())
         {
-            return components_[*it];
+            return components_[it->second];
         }
         else
         {
@@ -65,7 +65,7 @@ public:
         id_pos_map_t::iterator it = id_pos_map_.find(entity_id);
         if (it != id_pos_map_.end())
         {
-            return components_[*it];
+            return components_[it->second];
         }
         else
         {
@@ -73,27 +73,41 @@ public:
         }
     }
 
-    void Register(SystemObserver<T> &observer)
+    void Register(EntityStateObserver<T> &observer)
     {
         observers_.push_back(&observer);
     }
 
-    void Unregister(SystemObserver<T> &observer)
+    void Unregister(EntityStateObserver<T> &observer)
     {
         observers_.erase(std::remove(observers_.begin(), observers_.end(), &observer), observers_.end());
     }
 
     void Notify(entity_id_t entity_id)
     {
-        for (SystemObserver<T> *observer: observers_)
+        for (EntityStateObserver<T> *observer: observers_)
             observer->OnNotify(entity_id, GetComponent(entity_id));
+    }
+
+    void QueueNotification(entity_id_t entity_id)
+    {
+        pending_notifications_.push_back(entity_id);
+    }
+
+    void RunPendingNotifications()
+    {
+        for (entity_id_t entity_id: pending_notifications_)
+            Notify(entity_id);
+
+        pending_notifications_.clear();
     }
 
 protected:
     std::vector<T> components_;
     id_pos_map_t id_pos_map_;
 
-    std::vector<SystemObserver<T> *> observers_;
+    std::vector<EntityStateObserver<T> *> observers_;
+    std::vector<entity_id_t> pending_notifications_;
 };
 
 }  // namespace dwarvenrr
