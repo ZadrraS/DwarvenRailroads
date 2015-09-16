@@ -1,11 +1,15 @@
 #ifndef DWARVENRR_SYSTEMS_INPUT_SYSTEM_H_
 #define DWARVENRR_SYSTEMS_INPUT_SYSTEM_H_
 
+#include <SFML/Window/Event.hpp>
+
 #include "systems/base_system.h"
 #include "systems/base_component_manager.h"
 
 namespace dwarvenrr 
 {
+
+class RenderingSystem;
 
 struct InputComponent
 {

@@ -1,5 +1,7 @@
 #include "systems/input_system.h"
 
+#include "systems/rendering_system.h"
+
 namespace dwarvenrr
 {
 
@@ -27,9 +29,9 @@ void InputSystem::Update(double time_delta)
         for (size_t i = 0; i < components_.size(); ++i)
             components_[i].event = event;
 
-        for (id_pos_map_t::iterator it = id_pos_map.begin(); it != id_pos_map.end(); ++it)
+        for (id_pos_map_t::iterator it = id_pos_map_.begin(); it != id_pos_map_.end(); ++it)
             QueueNotification(it->first);
-        
+
         RunPendingNotifications();
     }
 

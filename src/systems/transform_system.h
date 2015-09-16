@@ -22,6 +22,7 @@ public:
     TransformSystem();
     ~TransformSystem();
 
+    void Init();
     void Update(double time_delta);
 
 private:

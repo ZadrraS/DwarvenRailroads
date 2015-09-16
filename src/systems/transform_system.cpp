@@ -13,10 +13,14 @@ TransformSystem::~TransformSystem()
 
 }
 
+void TransformSystem::Init()
+{
+    
+}
+
 void TransformSystem::Update(double time_delta)
 {
-    printf("I am a TRANSFORM system, beep boop!\n");
-    Notify(0);
+    
 }
 
 }  // namespace dwarvenrr

@@ -25,10 +25,17 @@ public:
     RenderingSystem();
     ~RenderingSystem();
 
+    void Init();
     void Update(double time_delta);
     void OnNotify(entity_id_t entity_id, TransformComponent &component);
 
+    sf::RenderWindow &GetRenderWindow();
+    sf::View &GetView();
+
 private:
+    sf::RenderWindow render_window_;
+    sf::View view_;
+
 };
 
 }  // dwarvenrr

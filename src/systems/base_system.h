@@ -10,6 +10,7 @@ namespace dwarvenrr
 class BaseSystem
 {
 public:
+    virtual void Init() = 0;
     virtual void Update(double time_delta) = 0;
 };
 
