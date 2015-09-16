@@ -23,6 +23,10 @@ add_executable(dwarvenrr
   systems/system_manager.cpp
   systems/rendering_system.cpp
   systems/transform_system.cpp
+  systems/input_system.cpp
+
+  states/state_manager.cpp
+  states/level_state.cpp
 )
 
 install(TARGETS dwarvenrr DESTINATION bin)

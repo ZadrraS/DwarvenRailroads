@@ -1,8 +1,8 @@
 #ifndef DWARVERNRR_ENGINE_H_
 #define DWARVERNRR_ENGINE_H_
 
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
+#include "states/state_manager.h"
+#include "systems/system_manager.h"
 
 namespace dwarvenrr
 {
@@ -13,22 +13,15 @@ public:
     Engine();
     ~Engine();
 
-    void Start();
+    void PushState(BaseState *state);
+    void Run();
+
+    StateManager &GetStateManager();
+    SystemManager &GetSystemManager();
 
 private:
-    enum State
-    {
-        UNINITIALIZED,
-        PAUSED,
-        RUNNING,
-        EXITING
-    };
-
-    bool IsDone();
-    void MainLoop();
-
-    State state_;
-    sf::RenderWindow render_window_;
+    StateManager state_manager_;
+    SystemManager system_manager_;
 };
 
 }  // namespace dwarvenrr
