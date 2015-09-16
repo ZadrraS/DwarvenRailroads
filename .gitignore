@@ -26,3 +26,14 @@
 *.exe
 *.out
 *.app
+
+# CMake stuff
+CMakeLists.txt
+CMakeCache.txt
+CMakeFiles
+Makefile
+cmake_install.cmake
+
+# Data and executables
+bin
+data
