@@ -28,6 +28,8 @@ public:
         {
             components_.push_back(T());
             id_pos_map_[entity_id] = components_.size() - 1;
+
+            return components_.back();
         }
         else
         {
@@ -97,8 +99,9 @@ public:
     void RunPendingNotifications()
     {
         for (entity_id_t entity_id: pending_notifications_)
+        {
             Notify(entity_id);
-
+}
         pending_notifications_.clear();
     }
 
